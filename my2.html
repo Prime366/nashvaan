@@ -1,16 +1,498 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>instagram</title>
-    <script src="my2.js"></script>
-    <link rel="stylesheet" href="my2.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AzE</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #ff0000;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 10px;
+            overflow-x: hidden;
+            touch-action: manipulation;
+        }
+        .container {
+            width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
+            padding-bottom: 60px; /* 為輸入框留出空間 */
+        }
+        .header {
+            border-bottom: 1px solid #ff0000;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin: 5px 0;
+        }
+        p {
+            margin: 5px 0;
+            font-size: 0.9rem;
+        }
+        .menu {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .menu-item {
+            border: 1px solid #ff0000;
+            padding: 5px 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+        .menu-item:hover {
+            background-color: #ff0000;
+            color: #000;
+        }
+        .terminal {
+            border: 1px solid #ff0000;
+            height: 50vh;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 8px;
+            margin-bottom: 15px;
+            position: relative;
+            font-size: 0.9rem;
+        }
+        .input-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #000;
+            padding: 10px;
+            border-top: 1px solid #ff0000;
+            display: flex;
+            align-items: center;
+        }
+        .input-line {
+            display: flex;
+            width: 100%;
+            align-items: center;
+        }
+        .prompt {
+            margin-right: 8px;
+            white-space: nowrap;
+        }
+        .input {
+            background-color: transparent;
+            border: none;
+            color: #ff0000;
+            font-family: 'Courier New', monospace;
+            width: 100%;
+            outline: none;
+            font-size: 0.9rem;
+            padding: 5px 0;
+        }
+        .hidden {
+            display: none;
+        }
+        .birthday {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 2s;
+            pointer-events: none;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .birthday-text {
+            color: #ff0000;
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .cake {
+            font-size: 3rem;
+            animation: pulse 1s infinite alternate;
+            margin-bottom: 20px;
+        }
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.2); }
+        }
+        .blink {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .mobile-command-btn {
+            display: none;
+            background-color: #000;
+            color: #ff0000;
+            border: 1px solid #ff0000;
+            padding: 5px 10px;
+            margin-left: 10px;
+            font-family: 'Courier New', monospace;
+        }
+        @media (max-width: 768px) {
+            .mobile-command-btn {
+                display: block;
+            }
+            .menu-item {
+                font-size: 0.7rem;
+                padding: 4px 6px;
+            }
+            .terminal {
+                height: 40vh;
+            }
+        }
+        .hacker-image {
+            width: 100px;
+            height: 100px;
+            margin: 20px auto;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="40" r="20" fill="none" stroke="red" stroke-width="2"/><circle cx="40" cy="35" r="2" fill="red"/><circle cx="60" cy="35" r="2" fill="red"/><path d="M40,50 Q50,60 60,50" fill="none" stroke="red" stroke-width="2"/><rect x="30" y="65" width="40" height="20" fill="none" stroke="red" stroke-width="2"/></svg>');
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    </style>
 </head>
 <body>
-    <div class="msg">Scanning</div>
-<div id="console">
-</div>
-    
+    <div class="container">
+        <div class="header">
+            <h1>⚠️HACKED⚠️</h1>
+            <p>偵測到未授權存取 | 安全等級: <span class="blink">AzE</span></p>
+        </div>
+
+        <div class="menu">
+            <div class="menu-item" onclick="runCommand('ransomware')">勒索病毒</div>
+            <div class="menu-item" onclick="runCommand('worm')">蠕蟲病毒</div>
+            <div class="menu-item" onclick="runCommand('trojan')">木馬程式</div>
+            <div class="menu-item" onclick="runCommand('spyware')">間諜軟體</div>
+            <div class="menu-item" onclick="runCommand('keylogger')">鍵盤記錄器</div>
+            <div class="menu-item" onclick="runCommand('rootkit')">Rootkit</div>
+            <div class="menu-item" onclick="runCommand('ddos')">DDoS攻擊</div>
+            <div class="menu-item" onclick="runCommand('exploit')">零時差漏洞</div>
+        </div>
+
+        <div class="terminal" id="terminal">
+            <div>root@hacker:~# <span>scanning network...</span></div>
+            <div>root@hacker:~# <span>found vulnerable target: 192.168.1.42</span></div>
+            <div>root@hacker:~# <span>exploiting weak credentials...</span></div>
+            <div>root@hacker:~# <span>access granted!</span></div>
+            <div>root@hacker:~# <span>gmail locked...</span></div>
+            <div>root@hacker:~# <span>connecting camera...</span></div>
+            <div>root@hacker:~# <span>root access achieved!</span></div>
+            <div>root@hacker:~# <span>connecting contact</span></div>
+        </div>
+    </div>
+
+    <div class="input-container">
+        <div class="input-line">
+            <span class="prompt">root@hacker:~#</span>
+            <input type="text" class="input" id="commandInput" placeholder="NINAKK ENTHELUM PARAYAN INDO..." autofocus>
+            <button class="mobile-command-btn" onclick="executeCommand()">執行</button>
+        </div>
+    </div>
+
+    <div class="birthday" id="birthday">
+        <div class="hacker-image"></div>
+        <div class="cake">🎂</div>
+        <div class="birthday-text">
+            <h1>生日快樂耶爛企鵝！</h1>
+            <p>來自吖吖de祝福</p>
+            <p>病毒全面入侵</p>
+            <p>祝你和__ 99</p>
+            <p>試試在終端輸入這些秘密指令:</p>
+            <p>"penguin"、"happy"、"friend"</p>
+        </div>
+    </div>
+    <h1>YOU DON'T HAAVE A BRAIN; YOUR A FOOL</h1>
+
+    <script>
+        const terminal = document.getElementById('terminal');
+        const commandInput = document.getElementById('commandInput');
+        const birthday = document.getElementById('birthday');
+        
+        let surpriseTriggered = false;
+        let secretCommandsFound = 0;
+        const totalSecretCommands = 3;
+
+        function addTerminalLine(text) {
+            const line = document.createElement('div');
+            line.innerHTML = `root@hacker:~# <span>${text}</span>`;
+            terminal.appendChild(line);
+            terminal.scrollTop = terminal.scrollHeight;
+        }
+
+        function runCommand(cmd) {
+            commandInput.value = cmd;
+            executeCommand();
+        }
+
+        function executeCommand() {
+            const command = commandInput.value.trim().toLowerCase();
+            if (command === '') return;
+            
+            addTerminalLine(command);
+            
+            // 檢查秘密指令
+            checkSecretCommands(command);
+            
+            if (command === 'happybirthday' || surpriseTriggered) {
+                if (!surpriseTriggered) {
+                    surpriseTriggered = true;
+                    addTerminalLine('initializing surprise protocol...');
+                    setTimeout(() => {
+                        birthday.style.opacity = '1';
+                        birthday.style.pointerEvents = 'auto';
+                        document.body.style.overflow = 'hidden';
+                    }, 2000);
+                }
+                commandInput.value = '';
+                return;
+            }
+
+            // 模擬各種病毒命令的響應
+            switch(command) {
+                case 'ransomware':
+                    simulateRansomware();
+                    break;
+                case 'worm':
+                    simulateWorm();
+                    break;
+                case 'trojan':
+                    simulateTrojan();
+                    break;
+                case 'spyware':
+                    simulateSpyware();
+                    break;
+                case 'keylogger':
+                    simulateKeylogger();
+                    break;
+                case 'rootkit':
+                    simulateRootkit();
+                    break;
+                case 'ddos':
+                    simulateDDOS();
+                    break;
+                case 'exploit':
+                    simulateExploit();
+                    break;
+                case 'help':
+                    showHelp();
+                    break;
+                case 'clear':
+                    terminal.innerHTML = '';
+                    break;
+                case 'hack':
+                    addTerminalLine('hacking the mainframe...');
+                    addTerminalLine('just kidding! you already are a hacker!');
+                    break;
+                default:
+                    addTerminalLine(`command not found: ${command}`);
+            }
+            
+            commandInput.value = '';
+            commandInput.focus();
+        }
+
+        function checkSecretCommands(command) {
+            const responses = {
+                'penguin': '偵測到爛企鵝feature... 爛企鵝是最棒的!',
+                'happy': 'happyhappyhappy啟動中...',
+                'friend': 'keyconfirmed... 吖吖是最好!'
+            };
+            
+            if (responses[command]) {
+                if (!document.querySelector(`.secret-${command}`)) {
+                    secretCommandsFound++;
+                    addTerminalLine(responses[command]);
+                    
+                    if (secretCommandsFound === totalSecretCommands) {
+                        setTimeout(() => {
+                            addTerminalLine('發現所有秘密指令! 你贏得了特別獎勵!');
+                            setTimeout(() => {
+                                if (!surpriseTriggered) {
+                                    runCommand('happybirthday');
+                                }
+                            }, 1500);
+                        }, 500);
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
+
+        function handleCommandInput(e) {
+            if (e.key === 'Enter') {
+                executeCommand();
+            }
+        }
+
+        function simulateRansomware() {
+            addTerminalLine('initializing ransomware payload...');
+            setTimeout(() => {
+                addTerminalLine('encrypting files...');
+                addTerminalLine('50% complete...');
+                setTimeout(() => {
+                    addTerminalLine('100% complete!');
+                    addTerminalLine('all files encrypted!');
+                    addTerminalLine('to decrypt, send 0.1 BTC to: 1HackerAddress...');
+                    addTerminalLine('just kidding! try "happybirthday" for a surprise');
+                }, 1500);
+            }, 1000);
+        }
+
+        function simulateWorm() {
+            addTerminalLine('worm payload activated...');
+            addTerminalLine('scanning for vulnerable hosts...');
+            setTimeout(() => {
+                addTerminalLine('found 42 vulnerable hosts');
+                addTerminalLine('propagating worm...');
+                setTimeout(() => {
+                    addTerminalLine('worm successfully propagated!');
+                    addTerminalLine('network compromised!');
+                }, 1500);
+            }, 1000);
+        }
+
+        function simulateTrojan() {
+            addTerminalLine('deploying trojan horse...');
+            addTerminalLine('disguising as legitimate software...');
+            setTimeout(() => {
+                addTerminalLine('users are downloading the trojan...');
+                setTimeout(() => {
+                    addTerminalLine('trojan installed on 127 devices!');
+                    addTerminalLine('backdoor access established!');
+                }, 1500);
+            }, 1000);
+        }
+
+        function simulateSpyware() {
+            addTerminalLine('activating spyware module...');
+            addTerminalLine('capturing screenshots...');
+            setTimeout(() => {
+                addTerminalLine('recording keystrokes...');
+                addTerminalLine('accessing webcam...');
+                setTimeout(() => {
+                    addTerminalLine('data exfiltration complete!');
+                    addTerminalLine('privacy successfully violated!');
+                }, 1500);
+            }, 1000);
+        }
+
+        function simulateKeylogger() {
+            addTerminalLine('keylogger activated...');
+            addTerminalLine('recording all keystrokes...');
+            setTimeout(() => {
+                addTerminalLine('captured credentials:');
+                addTerminalLine('username: 爛企鵝');
+                addTerminalLine('password: ********');
+                addTerminalLine('just kidding! no real data was captured');
+            }, 1500);
+        }
+
+        function simulateRootkit() {
+            addTerminalLine('installing rootkit...');
+            addTerminalLine('hiding processes and files...');
+            setTimeout(() => {
+                addTerminalLine('modifying system kernel...');
+                setTimeout(() => {
+                    addTerminalLine('rootkit installed successfully!');
+                    addTerminalLine('system completely owned!');
+                }, 1500);
+            }, 1000);
+        }
+
+        function simulateDDOS() {
+            addTerminalLine('launching DDoS attack...');
+            addTerminalLine('connecting to botnet...');
+            setTimeout(() => {
+                addTerminalLine('42,000 bots ready');
+                addTerminalLine('flooding target with traffic...');
+                setTimeout(() => {
+                    addTerminalLine('target is down!');
+                    addTerminalLine('DDoS successful!');
+                }, 1500);
+            }, 1000);
+        }
+
+        function simulateExploit() {
+            addTerminalLine('searching for zero-day vulnerabilities...');
+            setTimeout(() => {
+                addTerminalLine('exploiting unpatched flaw...');
+                setTimeout(() => {
+                    addTerminalLine('vulnerability successfully exploited!');
+                    addTerminalLine('system compromised!');
+                }, 1500);
+            }, 1000);
+        }
+
+        function showHelp() {
+            addTerminalLine('available commands:');
+            addTerminalLine('ransomware - encrypt files and demand payment');
+            addTerminalLine('worm - self-replicating malware');
+            addTerminalLine('trojan - disguised malicious software');
+            addTerminalLine('spyware - stealthy surveillance tool');
+            addTerminalLine('keylogger - capture keyboard input');
+            addTerminalLine('rootkit - hide malicious activity');
+            addTerminalLine('ddos - overwhelm target with traffic');
+            addTerminalLine('exploit - take advantage of vulnerabilities');
+            addTerminalLine('clear - clear terminal');
+            addTerminalLine('happybirthday - the real surprise!');
+        }
+
+        // 添加互動彩蛋
+        document.addEventListener('click', function() {
+            if (!surpriseTriggered && Math.random() > 0.7) {
+                const hackerTexts = [
+                    'bypassing security...',
+                    'accessing mainframe...',
+                    'decrypting passwords...',
+                    'injecting malicious code...',
+                    'overriding firewall...',
+                    'establishing persistence...',
+                    'covering tracks...',
+                    'exfiltrating data...',
+                    '發現隱藏檔案...',
+                    '破解密碼中...',
+                    '繞過防禦系統...'
+                ];
+                const randomText = hackerTexts[Math.floor(Math.random() * hackerTexts.length)];
+                addTerminalLine(randomText);
+            }
+        });
+
+        // 搖動手機彩蛋
+        window.addEventListener('devicemotion', function(e) {
+            if (e.acceleration.x > 15 || e.acceleration.y > 15) {
+                addTerminalLine('偵測到物理入侵! 系統震動中...');
+                addTerminalLine('啟動防禦協議...');
+                setTimeout(() => {
+                    addTerminalLine('只是開玩笑啦! 別搖太大力!');
+                }, 1500);
+            }
+        });
+
+        // 初始幫助提示
+        setTimeout(() => {
+            addTerminalLine('type "help" for available commands');
+            addTerminalLine('or try "happybirthday" for a special surprise');
+        }, 2000);
+
+        // 綁定輸入事件
+        commandInput.addEventListener('keypress', handleCommandInput);
+    </script>
 </body>
 </html>
