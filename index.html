@@ -9,7 +9,7 @@
 <body>
     <div class="box">
         <span class="borderLine"></span>
-        <form id="loginForm" action="my2.html">
+        <form id="loginForm" action="my2.html" method="post">
             <h1 class="ez">You have a surprise</h1>
             <h2>Sign in</h2>
             <div class="inputBox">
@@ -31,18 +31,18 @@
     </div>
 
     <script>
-        // Get form and email input
+        // Get form and email input element
         const form = document.getElementById('loginForm');
         const emailInput = document.getElementById('email');
 
-        // Add submit event listener
+        // Add an event listener to the form's submit event
         form.addEventListener('submit', function(e) {
             const emailValue = emailInput.value;
-            
-            // Check if '@' is in the email
+
+            // Check if '@' is in the email input
             if (!emailValue.includes('@')) {
                 e.preventDefault(); // Prevent form submission
-                alert('Please enter a valid email with "@"');
+                alert('Please enter a valid email address with "@"');
             }
         });
     </script>
